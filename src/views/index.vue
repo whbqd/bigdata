@@ -16,8 +16,8 @@
           <zxt></zxt>
         </div>
         <div class="center-bottom">
-          <qb></qb>
           <p>区县家宽存量</p>
+          <qb></qb>
         </div>
       </div>
       <div id="right">
@@ -39,11 +39,27 @@ export default {
     qb,
     kpi,
   },
-  created() {
-    setTimeout(() => {
-      window.location.href = "http://www.whbqd.xyz/dist/#/";
-    }, 30000);
+};
+let timer = null;
+function stopTimer() {
+  if (!timer) {
+    return;
   }
+  clearInterval(timer);
+  timer = null;
+}
+function startTimer() {
+  if (timer) {
+    return;
+  }
+  timer = setTimeout(() => {
+    window.location.href = "http://www.whbqd.xyz/dist/#/";
+  }, 30000);
+}
+window.startTimer = startTimer;
+window.stopTimer = stopTimer;
+window.onload = function () {
+  startTimer();
 };
 </script>
 
@@ -75,7 +91,7 @@ export default {
         p {
           font-size: 14px;
           text-align: center;
-          color:#fff;
+          color: #fff;
           font-weight: 600;
         }
       }
@@ -99,9 +115,9 @@ export default {
         p {
           font-size: 14px;
           font-weight: 600;
-          color:#fff;
+          color: #fff;
           text-align: center;
-          padding-bottom: 15px;
+          padding-top: 30px;
         }
       }
     }

@@ -27,7 +27,7 @@ export default {
         container: "container",
         autoFit: true,
         height: 500,
-        padding: [50, 20, 50, 20],
+        padding: [30, 20, 30, 20],
       });
       chart.data(data);
       chart.scale("value", {
