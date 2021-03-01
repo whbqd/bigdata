@@ -1,12 +1,12 @@
 <template>
   <div id="kpi">
     <div class="top">
-      <p>满意度+装维质量</p>
-      <dv-scroll-board :config="config" style="width: 100%; height: 95%" />
+      <p class="active" style="width: 320px">满意度+装维质量</p>
+      <dv-scroll-board id="config" :config="config" />
     </div>
     <div class="bottom">
-      <p style="margin-top: 20px">家宽装维质量</p>
-      <dv-scroll-board :config="config2" style="width: 100%; height: 95%" />
+      <p class="active" style="width: 280px">家宽装维质量</p>
+      <dv-scroll-board id="config" :config="config2" />
     </div>
   </div>
 </template>
@@ -74,22 +74,54 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   p {
-    margin-bottom: 10px;
-    text-align: center;
-    color:#fff;
+    // margin-bottom: 10px;
+
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
+    box-sizing: border-box;
+    height: 30px;
+  }
+  #config {
+    width: 100%;
+    height: calc(~"100% - 20px");
   }
   .top {
+    box-sizing: border-box;
+    border: 20px solid;
+    border-image: url("../assets/border.png") 30 20 stretch;
     flex: 1;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+    // padding: 0 0 10px;
+    padding-top: 50px;
+    // p {
+    //   flex: 1;
+    // }
+    // #config {
+    //   flex: 8;
+    // }
   }
   .bottom {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    margin-top: 15px;
+    box-sizing: border-box;
+    border: 20px solid;
+    border-image: url("../assets/border.png") 30 20 stretch;
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+    position: relative;
+    padding-top: 50px;
+    // p {
+    //   flex: 1;
+    // }
+    // #config {
+    //   flex: 8;
+    // }
   }
 }
 </style>
