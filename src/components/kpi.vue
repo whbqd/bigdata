@@ -13,24 +13,15 @@
 
 <script>
 export default {
+  props: ['data_myd','data_jk'],
   data() {
     return {
+      data1: [],
+      data2: [],
       config: {
         header: ["区县", "装机满意度", "修障满意度", "弱光占比", "开通及时率"],
         data: [
-          ["武林", "100%", "98.03%", "87.69%", "3.59"],
-          ["西湖", "98.53%", "96.75%", "85.33%", "0.51"],
-          ["江干", "99.55%", "96.24%", "90.00%", "3.66"],
-          ["拱墅", "100%", "96.30%", "90.00%", "2.06"],
-          ["钱塘", "99.35%", "96.88%", "79.55%", "0.66"],
-          ["滨江", "98.75%", "100.00%", "88.56%", "1.13"],
-          ["萧山", "99.22%", "96.78%", "91.59%", "1.61"],
-          ["余杭", "98.90%", "95.63%", "94.19%", "2.45"],
-          ["富阳", "98.83%", "99.36%", "95.15%", "1.34"],
-          ["临安", "99.18%", "97.50%", "88.56%", "0.77"],
-          ["桐庐", "96.58%", "98.46%", "92.31%", "0.77"],
-          ["建德", "98.73%", "100%", "96.43%", "0.66"],
-          ["淳安", "97.40%", "95.13%", "90.53", "1.07"],
+          
         ],
         headerBGC: "#2c3e50",
         oddRowBGC: "rgba(255,255,255,0)",
@@ -42,19 +33,7 @@ export default {
       config2: {
         header: ["区县", "弱光占比", "有线接入率", "维护质量达标率"],
         data: [
-          ["武林", "99.32%", "96.96%", "88.08%"],
-          ["西湖", "99.26%", "96.57%", "82.83%"],
-          ["江干", "99.52%", "97.18%", "89.96%"],
-          ["拱墅", "99.23%", "96.93%", "87.14%"],
-          ["钱塘", "99.53%", "97.45%", "89.29%"],
-          ["滨江", "99.41%", "97.17%", "90.13%"],
-          ["萧山", "99.25%", "95.83%", "87.80%"],
-          ["余杭", "99.17%", "97.64%", "86.23%"],
-          ["富阳", "99.34%", "97.45%", "91.70%"],
-          ["临安", "98.46%", "97.14%", "86.44%"],
-          ["桐庐", "99.56%", "97.82%", "89.31%"],
-          ["建德", "99.3%", "97.61%", "90.97%"],
-          ["淳安", "99.00%", "97.54%", "87.43"],
+          
         ],
         waitTime: 4500,
         index: false,
@@ -64,6 +43,53 @@ export default {
         oddRowBGC: "rgba(255,255,255,0)",
       },
     };
+  },
+  watch: {
+    data_myd() {
+      this.getData();
+    },
+    data_jk() {
+      this.getData();
+    }
+  },
+  methods: {
+    getData() {
+        // console.log('组件',this.data_myd,this.data_jk);   
+        if(this.data_myd && this.data_jk) {
+           this.init(this.data_myd, "manyidu", "config", "data1");
+           this.init(this.data_jk, "jiakuan", "config2", "data2");
+        }
+    },
+    init(res, name, config, dataName) {
+      // console.log(res);
+      res.forEach((item) => {
+        let data = [];
+        this[config].header.forEach((header) => {
+          // if(header === '弱光占比') { console.log(name,"维护质量达标率",item[header],header,item); }
+          if(header != '区县') {
+            data.push(item[header] ? (parseFloat(item[header]) * 100).toFixed(2) + "%": "");
+          } else {
+            data.push(item[header] || "");
+          }
+          
+        });
+        this[dataName].push(data);
+      });
+      const header = name !== 'manyidu' ? ["区县", "弱光占比", "有线接入率", "维护质量达标率"] : ["区县", "装机满意度", "修障满意度", "弱光占比", "开通及时率"];
+      this[config] = {
+        data: this[dataName],
+        headerBGC: "#2c3e50",
+        oddRowBGC: "rgba(255,255,255,0)",
+        index: false,
+        columnWidth: [70],
+        align: ["center"],
+        waitTime: 3300,
+        header: header
+      };
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>

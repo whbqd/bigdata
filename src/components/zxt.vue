@@ -7,6 +7,7 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: ["data"],
   methods: {
     myEcharts() {
       var myChart = echarts.init(document.querySelector("#zxt #main"));
@@ -82,20 +83,7 @@ export default {
                 },
               },
             },
-            data: [
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月",
-              "1月",
-
-            ],
+            data: this.date,
             textStyle: {
               color: "#fff",
             },
@@ -163,27 +151,31 @@ export default {
                 },
               },
             },
-            data: [
-              8498406.15,
-              17853726.94,
-              14155951.30,
-              13402707.48,
-              12992766.04,
-              13493289.63,
-              12757039.24,
-              14273823.05,
-              14136438.84,
-              13093720.91,
-              14236984.62
-            ],
+            data: this.value,
           }
         ],
       };
 
       myChart.setOption(option);
     },
+
+  },
+  data() {
+    return {
+      date: [],
+      value: []
+    }
+  },
+  created() {
+    this.data.forEach(item => {
+      this.date.push(parseInt(item.date.slice(5)) + "月");
+      // this.date.push(item.date);
+      this.value.push(parseFloat(item.value));
+    });
+    // console.log(this.date,this.value);
   },
   mounted() {
+    console.log("收入",this.data);
     this.myEcharts();
   },
 };
